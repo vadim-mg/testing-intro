@@ -46,8 +46,17 @@ function changeQuantity(cart, productId, quantity) {
   return cart;
 }
 
+/**
+ * 
+ * @param {array} cart 
+ * @param {number} productId 
+ * @returns array
+ */
+function removeFromCart(cart, productId) {
+  return cart.filter(val => val.id !== productId);
+}
 
-function removeFromCart() { return notImplemented(); }
+
 function calculateCartSubtotal() { return notImplemented(); }
 function calculateOrderTotal() { return notImplemented(); }
 
