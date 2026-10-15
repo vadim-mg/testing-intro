@@ -1,3 +1,5 @@
+const products = require("./data/products");
+
 function notImplemented() {
   throw new Error('Корзина ещё не реализована. Сначала прочитайте тесты.');
 }
@@ -10,8 +12,8 @@ function notImplemented() {
  * @returns array
  */
 function addToCart(cart, product, quantity) {
-  if(quantity <= 0 || quantity > product.stock) {
-    throw new RangeError('Количество товара не может быть отрицательным');
+  if (quantity === 0 || quantity > product.stock) {
+    throw new RangeError('Количество товара не верно');
   }
 
   const existingItem = cart.find((item) => item.id === product.id);
@@ -25,8 +27,26 @@ function addToCart(cart, product, quantity) {
   return cart;
 }
 
+/**
+ * 
+ * @param {array} cart 
+ * @param {number} productId 
+ * @param {number} quantity 
+ * @returns array
+ */
+function changeQuantity(cart, productId, quantity) {
+  const productInCart = cart.find(value => value.id === productId)
+  if (!productInCart) {
+    return cart;
+  }
+  if (quantity === 0 || quantity > productInCart.stock) {
+    throw new RangeError('Количество товара не верно');
+  }
+  productInCart.quantity = quantity;
+  return cart;
+}
 
-function changeQuantity() { return notImplemented(); }
+
 function removeFromCart() { return notImplemented(); }
 function calculateCartSubtotal() { return notImplemented(); }
 function calculateOrderTotal() { return notImplemented(); }
