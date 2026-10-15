@@ -1,4 +1,4 @@
-const products = require("./data/products");
+// const products = require("./data/products");
 
 function notImplemented() {
   throw new Error('Корзина ещё не реализована. Сначала прочитайте тесты.');
@@ -57,8 +57,35 @@ function removeFromCart(cart, productId) {
 }
 
 
-function calculateCartSubtotal() { return notImplemented(); }
-function calculateOrderTotal() { return notImplemented(); }
+/**
+ * 
+ * @param {array} cart 
+ * @returns array
+ */
+function calculateCartSubtotal(cart) {
+  return cart.reduce((prev, curr) => {
+    return prev + curr.price * curr.quantity;
+  }, 0)
+}
+
+
+/**
+ * 
+ * @param {array} cart 
+ * @param {string} promo 
+ * @returns array
+ */
+function calculateOrderTotal(cart, promo) {
+  const subtotal = calculateCartSubtotal(cart);
+  const delivery = subtotal >= 50000 ? 0 : 30000;
+  const discount = (subtotal >= 20000 && promo === 'SAVE10') ? subtotal * 0.1 : 0;
+  return {
+    subtotal,
+    discount,
+    delivery,
+    total: subtotal + delivery - discount,
+  }
+}
 
 const cartApi = { addToCart, changeQuantity, removeFromCart, calculateCartSubtotal, calculateOrderTotal };
 
